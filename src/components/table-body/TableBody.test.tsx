@@ -9,44 +9,84 @@ jest.mock("../table-row/TableRow", () => () => (
 ));
 
 describe("TableBody", () => {
-  const visibleRows: Instrument[] = [
+  const data: Instrument[] = [
     { ticker: "ALPHA", price: 10, assetClass: AssetClass.Equities },
     { ticker: "BETA", price: -10, assetClass: AssetClass.Credit },
+    { ticker: "GAMMA", price: 5, assetClass: AssetClass.Macro },
   ];
 
-  it("renders correct height", () => {
+  it("renders only visible rows based on startIndex/endIndex", () => {
     render(
-      <TableBody
-        height={200}
-        virtualization={{ translateY: 0, visibleRows }}
-      />,
+      <table>
+        <TableBody
+          data={data}
+          virtualization={{
+            startIndex: 0,
+            endIndex: 2,
+            topSpacerHeight: 0,
+            bottomSpacerHeight: 0,
+          }}
+        />
+      </table>,
     );
 
-    const wrapper = screen.getByTestId("table-body-wrapper");
-    expect(wrapper).toHaveStyle({ height: "200px" });
+    const rows = screen.getAllByTestId("mock-table-row");
+    expect(rows).toHaveLength(2);
   });
 
-  it("applies translateY correctly", () => {
+  it("renders top spacer when topSpacerHeight > 0", () => {
     render(
-      <TableBody
-        height={200}
-        virtualization={{ translateY: 50, visibleRows }}
-      />,
+      <table>
+        <TableBody
+          data={data}
+          virtualization={{
+            startIndex: 1,
+            endIndex: 2,
+            topSpacerHeight: 40,
+            bottomSpacerHeight: 0,
+          }}
+        />
+      </table>,
     );
 
-    const tbody = screen.getByTestId("table-body-tbody");
-    expect(tbody).toHaveStyle({ transform: "translateY(50px)" });
+    const spacer = screen.getByTestId("top-spacer");
+    expect(spacer).toHaveStyle({ height: "40px" });
   });
 
-  it("renders visible rows", () => {
+  it("renders bottom spacer when bottomSpacerHeight > 0", () => {
     render(
-      <TableBody
-        height={200}
-        virtualization={{ translateY: 0, visibleRows }}
-      />,
+      <table>
+        <TableBody
+          data={data}
+          virtualization={{
+            startIndex: 0,
+            endIndex: 1,
+            topSpacerHeight: 0,
+            bottomSpacerHeight: 80,
+          }}
+        />
+      </table>,
     );
 
-    const headers = screen.getAllByTestId("mock-table-row");
-    expect(headers).toHaveLength(2);
+    const spacer = screen.getByTestId("bottom-spacer");
+    expect(spacer).toHaveStyle({ height: "80px" });
+  });
+
+  it("does not render spacer rows when heights are 0", () => {
+    render(
+      <table>
+        <TableBody
+          data={data}
+          virtualization={{
+            startIndex: 0,
+            endIndex: 1,
+            topSpacerHeight: 0,
+            bottomSpacerHeight: 0,
+          }}
+        />
+      </table>,
+    );
+
+    expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
   });
 });

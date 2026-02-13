@@ -7,6 +7,7 @@ import { sortInstruments } from "./utils";
 import { InstrumentInitialState } from "../../reducers/types";
 import { AssetClass, Instrument } from "../../api/types";
 import { SortBy } from "./types";
+
 jest.mock("./utils", () => ({
   sortInstruments: jest.fn(),
 }));

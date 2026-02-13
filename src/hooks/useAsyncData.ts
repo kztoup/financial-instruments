@@ -30,6 +30,18 @@ const useAsyncData = <T>(fetcher: () => Promise<T>) => {
         if (isMounted) {
           setData(result);
         }
+        // For testing performance with large datasets, we can simulate by replicating the result.
+        // if (isMounted) {
+        //   const data = Array(100)
+        //     .fill(result)
+        //     .flat()
+        //     .map((item) => ({
+        //       ...item,
+        //       ticker: `${item.ticker}_${crypto.randomUUID()}`,
+        //     }));
+
+        //   setData(data);
+        // }
       } catch (err) {
         if (isMounted) {
           setError(err as Error);

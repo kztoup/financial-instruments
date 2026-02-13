@@ -1,32 +1,37 @@
 import React, { FC, memo } from "react";
-import { AssetClass } from "../../api/types";
+import { Instrument } from "../../api/types";
 import { rowColor } from "./utils";
 import styles from "./table-row.module.css";
 
 /**
  * Renders a single row in the instrument table.
  *
- * @param props.ticker - Instrument ticker
+ * @param props.ticker - Current instrument ticker
  * @param props.price - Current instrument price
- * @param props.assetClass - Asset class for styling
+ * @param props.assetClass - Current instrument asset class
+ * @param props.rowIndex - Index of the row in the full dataset
  *
  * @returns A table row element.
  */
 
-type Props = {
-  ticker: string;
-  price: number;
-  assetClass: AssetClass;
+type Props = Instrument & {
+  rowIndex: number;
 };
 
-const TableRow: FC<Props> = memo(({ ticker, price, assetClass }) => {
+const TableRow: FC<Props> = memo(({ ticker, price, assetClass, rowIndex }) => {
+  const safePrice = Number(price);
+  const isValidPrice = price !== null && Number.isFinite(safePrice);
+
   return (
-    <tr className={styles[rowColor(assetClass)]}>
-      <td>{assetClass}</td>
-      <td className={styles[price >= 0 ? "price-blue" : "price-red"]}>
-        {price.toFixed(2)}
+    <tr
+      aria-rowindex={rowIndex + 1}
+      className={`${styles.row} ${styles[rowColor[assetClass]]}`}
+    >
+      <td>{assetClass ?? "-"}</td>
+      <td className={styles[price >= 0 ? "priceBlue" : "priceRed"]}>
+        {isValidPrice ? safePrice.toFixed(2) : "-"}
       </td>
-      <td>{ticker}</td>
+      <td>{ticker ?? "-"}</td>
     </tr>
   );
 });

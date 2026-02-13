@@ -1,5 +1,15 @@
 import React, { Component, ReactNode } from "react";
 
+/**
+ * ErrorBoundary component.
+ *
+ * Wraps children and catches rendering errors in the component tree below it.
+ *
+ * @param props.children - React nodes to render inside the boundary.
+ *
+ * @returns The child tree when no error has occurred, otherwise a fallback UI.
+ */
+
 type Props = {
   children: ReactNode;
 };

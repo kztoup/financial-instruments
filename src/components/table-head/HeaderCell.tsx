@@ -2,6 +2,7 @@ import React, { FC, memo } from "react";
 import { SortBy } from "../../hooks/use-instrument-state/types";
 import useInstrumentState from "../../hooks/use-instrument-state/useInstrumentState";
 import useInstrumentDispatch from "../../hooks/useInstrumentDispatch";
+import styles from "./header-cell.module.css";
 
 /**
  * Table header cell that triggers sorting when clicked.
@@ -21,13 +22,18 @@ const HeaderCell: FC<Props> = memo(({ label, sortKey }) => {
   const { sortBy } = useInstrumentState();
   const { setSort } = useInstrumentDispatch();
 
-  const onSortChange = (key: SortBy) => setSort(key);
-
   const isActive = sortBy === sortKey;
 
   return (
-    <th data-testid={`header-${sortKey}`} onClick={() => onSortChange(sortKey)}>
-      {label} {isActive ? "▲" : ""}
+    <th scope="col" data-testid={`header-${sortKey}`}>
+      <button
+        aria-label={`${label} sort`}
+        className={styles.sortButton}
+        onClick={() => setSort(sortKey)}
+      >
+        {label}
+        {isActive && <span className={styles.arrow}>▲</span>}
+      </button>
     </th>
   );
 });

@@ -7,5 +7,7 @@ import { Instrument } from "./types";
  * @returns A promise resolving to an array of `Instrument`.
  */
 
-export const fetchInstruments = async (): Promise<Instrument[]> =>
-  sampleData as Instrument[];
+export const fetchInstruments = (delay = 1000): Promise<Instrument[]> =>
+  new Promise((resolve) =>
+    setTimeout(() => resolve(sampleData as Instrument[]), delay),
+  );

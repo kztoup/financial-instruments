@@ -9,11 +9,8 @@ import useInstrumentDispatch from "../../hooks/useInstrumentDispatch";
 jest.mock("../../hooks/use-instrument-state/useInstrumentState");
 jest.mock("../../hooks/useInstrumentDispatch");
 
-const mockedUseInstrumentState = useInstrumentState as jest.MockedFunction<
-  typeof useInstrumentState
->;
-const mockedUseInstrumentDispatch =
-  useInstrumentDispatch as jest.MockedFunction<typeof useInstrumentDispatch>;
+const mockedUseInstrumentState = jest.mocked(useInstrumentState);
+const mockedUseInstrumentDispatch = jest.mocked(useInstrumentDispatch);
 
 const renderHeaderCell = (label: string, sortKey: SortBy) => {
   return render(
@@ -55,6 +52,7 @@ describe("HeaderCell", () => {
 
     renderHeaderCell("Asset Class", SortBy.ASSET_CLASS);
 
+    expect(screen.getByText("Asset Class")).toBeInTheDocument();
     expect(screen.getByTestId("header-asset-class")).toBeInTheDocument();
   });
 
@@ -66,7 +64,7 @@ describe("HeaderCell", () => {
 
     renderHeaderCell("Price", SortBy.PRICE);
 
-    fireEvent.click(screen.getByTestId("header-price"));
+    fireEvent.click(screen.getByRole("button"));
 
     expect(setSortMock).toHaveBeenCalledWith(SortBy.PRICE);
   });
@@ -77,7 +75,7 @@ describe("HeaderCell", () => {
 
     renderHeaderCell("Ticker", SortBy.TICKER);
 
-    expect(screen.getByTestId("header-ticker")).toHaveTextContent(/▲/);
+    expect(screen.getByTestId("header-ticker")).toHaveTextContent("▲");
   });
 
   it("does not show arrow when inactive", () => {
@@ -87,6 +85,6 @@ describe("HeaderCell", () => {
     renderHeaderCell("Ticker", SortBy.TICKER);
 
     expect(screen.getByText("Ticker")).toBeInTheDocument();
-    expect(screen.getByTestId("header-ticker")).not.toHaveTextContent(/▲/);
+    expect(screen.getByTestId("header-ticker")).not.toHaveTextContent("▲");
   });
 });

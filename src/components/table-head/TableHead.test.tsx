@@ -7,7 +7,11 @@ jest.mock("./HeaderCell", () => () => <th data-testid="mock-header-cell" />);
 
 describe("TableHead", () => {
   it("renders three HeaderCell components", () => {
-    render(<TableHead />);
+    render(
+      <table>
+        <TableHead />
+      </table>,
+    );
 
     const headers = screen.getAllByTestId("mock-header-cell");
     expect(headers).toHaveLength(3);

@@ -1,19 +1,40 @@
-.white-row {
-  background-color: #ffffff;
+.row {
+  height: 40px; /* ROW_HEIGHT */
 }
 
-.blue-row {
-  background-color: #90d5ff;
+.row td {
+  padding: 8px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  border: 1px solid #e5e5e5;
 }
 
-.green-row {
-  background-color: #88e788;
+.row td:first-child {
+  border-left: none;
 }
 
-.price-blue {
-  color: blue;
+.row td:last-child {
+  border-right: none;
 }
 
-.price-red {
-  color: red;
+/* Asset class colors */
+.macro {
+  background: white;
+}
+
+.equities {
+  background: #90d5ff;
+}
+
+.credit {
+  background: #88e788;
+}
+
+/* Price coloring */
+.priceBlue {
+  color: #1e40ff;
+}
+
+.priceRed {
+  color: #d00000;
 }

@@ -12,16 +12,20 @@ export const sortInstruments = (data: Instrument[], sortBy: SortBy) => {
 
   if (sortBy === SortBy.ASSET_CLASS) {
     return sorted.sort(
-      (a, b) => assetClassOrder[a.assetClass] - assetClassOrder[b.assetClass],
+      (a, b) =>
+        (assetClassOrder?.[a.assetClass] ?? Infinity) -
+        (assetClassOrder?.[b.assetClass] ?? Infinity),
     );
   }
 
   if (sortBy === SortBy.PRICE) {
-    return sorted.sort((a, b) => b.price - a.price);
+    return sorted.sort((a, b) => (b.price ?? Infinity) - (a.price ?? Infinity));
   }
 
   if (sortBy === SortBy.TICKER) {
-    return sorted.sort((a, b) => a.ticker.localeCompare(b.ticker));
+    return sorted.sort((a, b) =>
+      (a.ticker ?? "").localeCompare(b.ticker ?? ""),
+    );
   }
 
   return sorted;

@@ -1,3 +1,3 @@
-export const ROW_HEIGHT = 36;
-export const TABLE_HEIGHT = 500;
-export const BUFFER = 10;
+export const ROW_HEIGHT = 40;
+export const TABLE_HEIGHT = 600;
+export const BUFFER = 6;

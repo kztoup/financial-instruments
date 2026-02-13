@@ -10,15 +10,13 @@ import styles from "./table-head.module.css";
  */
 
 const TableHead: FC = memo(() => (
-  <table className={styles["table-head"]}>
-    <thead>
-      <tr>
-        <HeaderCell label="Asset Class" sortKey={SortBy.ASSET_CLASS} />
-        <HeaderCell label="Price" sortKey={SortBy.PRICE} />
-        <HeaderCell label="Ticker" sortKey={SortBy.TICKER} />
-      </tr>
-    </thead>
-  </table>
+  <thead className={styles.thead}>
+    <tr>
+      <HeaderCell label="Asset Class" sortKey={SortBy.ASSET_CLASS} />
+      <HeaderCell label="Price" sortKey={SortBy.PRICE} />
+      <HeaderCell label="Ticker" sortKey={SortBy.TICKER} />
+    </tr>
+  </thead>
 ));
 
 export default TableHead;

@@ -1,16 +1,19 @@
-import { rowColor } from "./utils";
 import { AssetClass } from "../../api/types";
+import { rowColor } from "./utils";
 
-describe("rowColor", () => {
-  it("returns blue-row for Equities", () => {
-    expect(rowColor(AssetClass.Equities)).toBe("blue-row");
+describe("rowColor mapping", () => {
+  it("has a mapping for every AssetClass", () => {
+    const assetClasses = Object.values(AssetClass) as AssetClass[];
+
+    assetClasses.forEach((assetClass) => {
+      expect(rowColor[assetClass]).toBeDefined();
+      expect(rowColor[assetClass]).not.toBe("");
+    });
   });
 
-  it("returns green-row for Credit", () => {
-    expect(rowColor(AssetClass.Credit)).toBe("green-row");
-  });
-
-  it("returns white-row for Macro", () => {
-    expect(rowColor(AssetClass.Macro)).toBe("white-row");
+  it("mapping values are strings and stable", () => {
+    expect(rowColor[AssetClass.Equities]).toBe("equities");
+    expect(rowColor[AssetClass.Macro]).toBe("macro");
+    expect(rowColor[AssetClass.Credit]).toBe("credit");
   });
 });
