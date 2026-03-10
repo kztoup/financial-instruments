@@ -7,7 +7,11 @@ export const assetClassOrder: Record<AssetClass, number> = {
   [AssetClass.Credit]: 3,
 };
 
-export const sortInstruments = (data: Instrument[], sortBy: SortBy) => {
+export const sortInstruments = (
+  data: Instrument[],
+  sortBy: SortBy,
+  ASC: boolean,
+) => {
   const sorted = [...data];
 
   if (sortBy === SortBy.ASSET_CLASS) {
@@ -19,13 +23,22 @@ export const sortInstruments = (data: Instrument[], sortBy: SortBy) => {
   }
 
   if (sortBy === SortBy.PRICE) {
-    return sorted.sort((a, b) => (b.price ?? Infinity) - (a.price ?? Infinity));
+    return sorted.sort((a, b) => {
+      if (ASC) {
+        return (a.price ?? Infinity) - (b.price ?? Infinity);
+      }
+      return (b.price ?? Infinity) - (a.price ?? Infinity);
+    });
   }
 
   if (sortBy === SortBy.TICKER) {
-    return sorted.sort((a, b) =>
-      (a.ticker ?? "").localeCompare(b.ticker ?? ""),
-    );
+    return sorted.sort((a, b) => {
+      if (ASC) {
+        return (a.ticker ?? "").localeCompare(b.ticker ?? "");
+      }
+
+      return (b.ticker ?? "").localeCompare(a.ticker ?? "");
+    });
   }
 
   return sorted;

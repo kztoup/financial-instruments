@@ -23,8 +23,8 @@ const useInstrumentState = () => {
     if (!data) {
       return [];
     }
-    return sortInstruments(data, state.sortBy);
-  }, [data, state.sortBy]);
+    return sortInstruments(data, state.sortBy, state.ASC);
+  }, [data, state.sortBy, state.ASC]);
 
   return { ...state, sortedData };
 };

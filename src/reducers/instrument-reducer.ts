@@ -15,6 +15,7 @@ export const instrumentInitialState: InstrumentInitialState = {
   loading: false,
   error: null,
   sortBy: SortBy.ASSET_CLASS,
+  ASC: true,
 };
 
 /**
@@ -32,9 +33,9 @@ export const instrumentReducer = (
   switch (action.type) {
     case ActionTypes.SET_SORT:
       if (state.sortBy === action.payload) {
-        return state;
+        return { ...state, sortBy: action.payload, ASC: !state.ASC };
       }
-      return { ...state, sortBy: action.payload };
+      return { ...state, sortBy: action.payload, ASC: true };
     default:
       return state;
   }

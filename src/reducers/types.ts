@@ -6,4 +6,5 @@ export type InstrumentInitialState = {
   loading: boolean;
   error: Error | null;
   sortBy: SortBy;
+  ASC: boolean;
 };
